@@ -1,0 +1,413 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.11.5">
+    <title>Unicode – unicode v0.0.1</title>
+    <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
+    
+      <link rel="canonical" href="https://hexdocs.pm/unicode/Unicode.html" />
+    
+    <script src="dist/sidebar_items.js"></script>
+  </head>
+  <body data-type="modules">
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <i class="icon-menu"></i>
+</button>
+<section class="sidebar">
+  <button class="sidebar-toggle">
+    <i class="icon-menu"></i>
+  </button>
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        unicode
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.0.1
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <i class="icon-search"></i>
+    <input type="text" class="sidebar-searchInput" placeholder="search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+  </ul>
+
+  <ul id="full-list" class="sidebar-fullList"></ul>
+  <div class="sidebar-noResults"></div>
+</section>
+
+<section class="content">
+  <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">unicode v0.0.1</small>
+        Unicode
+        
+        
+      </h1>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Provides functionality to efficiently check properties of Unicode codepoints, graphemes and strings.</p>
+<p>The current implementation is based on Unicode version <em>8.0.0</em>.</p>
+
+        </section>
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <i class="icon-link"></i>
+            </a>
+            Summary
+          </h1>
+          
+
+          
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#alphabetic?/1">alphabetic?(codepoint_or_string)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Alphabetic</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#alphanumeric?/1">alphanumeric?(codepoint)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>True for alphanumeric characters, but much more performant than an <code class="inline">:alnum:</code> regexp checking the same thing</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#lowercase?/1">lowercase?(codepoint_or_string)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Lowercase</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#math?/1">math?(codepoint_or_string)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Math</code></p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#numeric?/1">numeric?(codepoint)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>True for the digits [0-9], but much more performant than a <code class="inline"></code> regexp checking the same thing</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#uppercase?/1">uppercase?(codepoint_or_string)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Uppercase</code></p>
+</div>
+  
+</div>
+
+  </div>
+
+
+          
+
+          
+
+        </section>
+      
+
+      
+
+      
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <i class="icon-link"></i>
+            </a>
+            Functions
+          </h1>
+          <div class="detail" id="alphabetic?/1">
+  <div class="detail-header">
+    <a href="#alphabetic?/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">alphabetic?(codepoint_or_string)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">alphabetic?(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:codepoint/0">String.codepoint</a> | <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: boolean</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Alphabetic</code>.</p>
+<p>These are all characters that are usually used as representations of letters/syllabes/ in words/sentences.
+The function takes a unicode codepoint or a string as input.</p>
+<p>For the string-version, the result will be true only if <em>all</em> codepoints in the string adhere to the property.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt;Unicode.alphabetic?(?a)
+true
+iex&gt;Unicode.alphabetic?(&quot;A&quot;)
+true
+iex&gt;Unicode.alphabetic?(&quot;Elixir&quot;)
+true
+iex&gt;Unicode.alphabetic?(&quot;الإكسير&quot;)
+true
+iex&gt;Unicode.alphabetic?(&quot;foo, bar&quot;) # comma and whitespace
+false
+iex&gt;Unicode.alphabetic?(&quot;42&quot;)
+false
+iex&gt;Unicode.alphabetic?(&quot;龍王&quot;)
+true
+iex&gt;Unicode.alphabetic?(&quot;∑&quot;) # Summation, ∑
+false
+iex&gt;Unicode.alphabetic?(&quot;Σ&quot;) # Greek capital letter sigma, Σ
+true</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="alphanumeric?/1">
+  <div class="detail-header">
+    <a href="#alphanumeric?/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">alphanumeric?(codepoint)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>True for alphanumeric characters, but much more performant than an <code class="inline">:alnum:</code> regexp checking the same thing.</p>
+<p>Returns true if <code class="inline">Unicode.alphabetic?(x) or Unicode.numeric?(x)</code>.</p>
+<p>Derived from <a href="http://www.unicode.org/reports/tr18/#alnum"><a href="http://www.unicode.org/reports/tr18/#alnum">http://www.unicode.org/reports/tr18/#alnum</a></a></p>
+<h3>Examples</h3>
+<pre><code class="iex elixir">iex&gt; Unicode.alphanumeric? &quot;1234&quot;
+true
+iex&gt; Unicode.alphanumeric? &quot;KeyserSöze1995&quot;
+true
+iex&gt; Unicode.alphanumeric? &quot;3段&quot;
+true
+iex&gt; Unicode.alphanumeric? &quot;dragon@example.com&quot;
+false</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="lowercase?/1">
+  <div class="detail-header">
+    <a href="#lowercase?/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">lowercase?(codepoint_or_string)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">lowercase?(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:codepoint/0">String.codepoint</a> | <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: boolean</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Lowercase</code>.</p>
+<p>Notice that there are many languages that do not have a distinction between cases. Their characters are not included in this group.</p>
+<p>The function takes a unicode codepoint or a string as input.</p>
+<p>For the string-version, the result will be true only if <em>all</em> codepoints in the string adhere to the property.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt;Unicode.lowercase?(?a)
+true
+iex&gt;Unicode.lowercase?(&quot;A&quot;)
+false
+iex&gt;Unicode.lowercase?(&quot;Elixir&quot;)
+false
+iex&gt;Unicode.lowercase?(&quot;léon&quot;)
+true
+iex&gt;Unicode.lowercase?(&quot;foo, bar&quot;)
+false
+iex&gt;Unicode.lowercase?(&quot;42&quot;)
+false
+iex&gt;Unicode.lowercase?(&quot;Σ&quot;)
+false
+iex&gt;Unicode.lowercase?(&quot;σ&quot;)
+true</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="math?/1">
+  <div class="detail-header">
+    <a href="#math?/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">math?(codepoint_or_string)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">math?(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:codepoint/0">String.codepoint</a> | <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: boolean</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Math</code>.</p>
+<p>These are all characters whose primary usage is in mathematical concepts (and not in alphabets).
+Notice that the numerical digits are not part of this group. Use <code class="inline">Unicode.digit?/1</code> instead.</p>
+<p>The function takes a unicode codepoint or a string as input.</p>
+<p>For the string-version, the result will be true only if <em>all</em> codepoints in the string adhere to the property.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt;Unicode.math?(?=)
+true
+iex&gt;Unicode.math?(&quot;=&quot;)
+true
+iex&gt;Unicode.math?(&quot;1+1=2&quot;) # Note that digits themselves are not part of `Math`.
+false
+iex&gt;Unicode.math?(&quot;परिस&quot;)
+false
+iex&gt;Unicode.math?(&quot;∑&quot;) # Summation, ∑
+true
+iex&gt;Unicode.math?(&quot;Σ&quot;) # Greek capital letter sigma, Σ
+false</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="numeric?/1">
+  <div class="detail-header">
+    <a href="#numeric?/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">numeric?(codepoint)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>True for the digits [0-9], but much more performant than a <code class="inline"></code> regexp checking the same thing.</p>
+<p>Derived from <a href="http://www.unicode.org/reports/tr18/#digit"><a href="http://www.unicode.org/reports/tr18/#digit">http://www.unicode.org/reports/tr18/#digit</a></a></p>
+<h3>Examples</h3>
+<pre><code class="iex elixir">iex&gt; Unicode.numeric?(&quot;65535&quot;)
+true
+iex&gt; Unicode.numeric?(&quot;42&quot;)
+true
+iex&gt; Unicode.numeric?(&quot;lapis philosophorum&quot;)
+false</code></pre>
+
+  </section>
+</div>
+<div class="detail" id="uppercase?/1">
+  <div class="detail-header">
+    <a href="#uppercase?/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">uppercase?(codepoint_or_string)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">uppercase?(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:codepoint/0">String.codepoint</a> | <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: boolean</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property <code class="inline">Uppercase</code>.</p>
+<p>Notice that there are many languages that do not have a distinction between cases. Their characters are not included in this group.</p>
+<p>The function takes a unicode codepoint or a string as input.</p>
+<p>For the string-version, the result will be true only if <em>all</em> codepoints in the string adhere to the property.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt;Unicode.uppercase?(?a)
+false
+iex&gt;Unicode.uppercase?(&quot;A&quot;)
+true
+iex&gt;Unicode.uppercase?(&quot;Elixir&quot;)
+false
+iex&gt;Unicode.uppercase?(&quot;CAMEMBERT&quot;)
+true
+iex&gt;Unicode.uppercase?(&quot;foo, bar&quot;)
+false
+iex&gt;Unicode.uppercase?(&quot;42&quot;)
+false
+iex&gt;Unicode.uppercase?(&quot;Σ&quot;)
+true
+iex&gt;Unicode.uppercase?(&quot;σ&quot;)
+false</code></pre>
+
+  </section>
+</div>
+
+        </section>
+      
+
+      
+
+      
+        <footer class="footer">
+      <p>
+        <span class="line">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.11.5),
+        </span>
+        <span class="line">
+          designed by
+          <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+      </p>
+      <button class="night-mode-toggle" />
+    </footer>
+  </div>
+</section>
+</div>
+  <script src="dist/app-918614602f.js"></script>
+  </body>
+</html>
+

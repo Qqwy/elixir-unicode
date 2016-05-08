@@ -1,8 +1,13 @@
 # Unicode
 
+[![hex.pm version](https://img.shields.io/hexpm/v/unicode.svg)](https://hex.pm/packages/unicode)
+[![Build Status](https://travis-ci.org/Qqwy/elixir-unicode.svg?branch=master)](https://travis-ci.org/Qqwy/elixir-unicode)
+[![Documentation](https://img.shields.io/badge/hexdocs-documentation-ddaaff.svg)](https://hexdocs.pm/unicode/0.0.1/api-reference.html)
+
+
 The _Unicode_ package provides functionality to check properties of unicode codepoints, graphemes and strings.
 
-This is often useful when checking or validating the contents of strings in sitiations where using Regular Expressions is not necessary and/or too slow. 
+This is often useful when checking or validating the contents of strings in sutiations where using Regular Expressions is not necessary and/or too slow. 
 
 The Unicode package is based on Version 8.0.0 of the Unicode standard.
 

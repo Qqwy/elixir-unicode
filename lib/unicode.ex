@@ -35,7 +35,9 @@ defmodule Unicode do
   @doc """
   Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property `Math`.
 
-  These are all characters whose primary usage is in mathematical concepts (and not in alphabets)
+  These are all characters whose primary usage is in mathematical concepts (and not in alphabets).
+  Notice that the numerical digits are not part of this group. Use `Unicode.digit?/1` instead.
+
   The function takes a unicode codepoint or a string as input.
 
   For the string-version, the result will be true only if _all_ codepoints in the string adhere to the property.
@@ -46,11 +48,9 @@ defmodule Unicode do
       true
       iex>Unicode.math?("=")
       true
-      iex>Unicode.math?("1+1=2")
-      true
-      iex>Unicode.math?("camembert")
+      iex>Unicode.math?("1+1=2") # Note that digits themselves are not part of `Math`.
       false
-      iex>Unicode.math?("3x")
+      iex>Unicode.math?("परिस")
       false
       iex>Unicode.math?("∑") # Summation, \u2211
       true
@@ -60,12 +60,97 @@ defmodule Unicode do
   @spec math?(String.codepoint | String.t) :: boolean
   def math?(codepoint_or_string)
 
+  @doc """
+  Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property `Alphabetic`.
+
+  These are all characters that are usually used as representations of letters/syllabes/ in words/sentences.
+  The function takes a unicode codepoint or a string as input.
+
+  For the string-version, the result will be true only if _all_ codepoints in the string adhere to the property.
+
+  ## Examples
+
+      iex>Unicode.alphabetic?(?a)
+      true
+      iex>Unicode.alphabetic?("A")
+      true
+      iex>Unicode.alphabetic?("Elixir")
+      true
+      iex>Unicode.alphabetic?("الإكسير")
+      true
+      iex>Unicode.alphabetic?("foo, bar") # comma and whitespace
+      false
+      iex>Unicode.alphabetic?("42")
+      false
+      iex>Unicode.alphabetic?("龍王")
+      true
+      iex>Unicode.alphabetic?("∑") # Summation, \u2211
+      false
+      iex>Unicode.alphabetic?("Σ") # Greek capital letter sigma, \u03a3
+      true
+  """
   @spec alphabetic?(String.codepoint | String.t) :: boolean
   def alphabetic?(codepoint_or_string)
   
+  @doc """
+  Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property `Lowercase`.
+
+  Notice that there are many languages that do not have a distinction between cases. Their characters are not included in this group.
+
+  The function takes a unicode codepoint or a string as input.
+
+  For the string-version, the result will be true only if _all_ codepoints in the string adhere to the property.
+
+  ## Examples
+
+      iex>Unicode.lowercase?(?a)
+      true
+      iex>Unicode.lowercase?("A")
+      false
+      iex>Unicode.lowercase?("Elixir")
+      false
+      iex>Unicode.lowercase?("léon")
+      true
+      iex>Unicode.lowercase?("foo, bar")
+      false
+      iex>Unicode.lowercase?("42")
+      false
+      iex>Unicode.lowercase?("Σ")
+      false
+      iex>Unicode.lowercase?("σ")
+      true
+  """
   @spec lowercase?(String.codepoint | String.t) :: boolean
   def lowercase?(codepoint_or_string)
 
+  @doc """
+  Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property `Uppercase`.
+
+  Notice that there are many languages that do not have a distinction between cases. Their characters are not included in this group.
+
+  The function takes a unicode codepoint or a string as input.
+
+  For the string-version, the result will be true only if _all_ codepoints in the string adhere to the property.
+
+  ## Examples
+
+      iex>Unicode.uppercase?(?a)
+      false
+      iex>Unicode.uppercase?("A")
+      true
+      iex>Unicode.uppercase?("Elixir")
+      false
+      iex>Unicode.uppercase?("CAMEMBERT")
+      true
+      iex>Unicode.uppercase?("foo, bar")
+      false
+      iex>Unicode.uppercase?("42")
+      false
+      iex>Unicode.uppercase?("Σ")
+      true
+      iex>Unicode.uppercase?("σ")
+      false
+  """
   @spec uppercase?(String.codepoint | String.t) :: boolean
   def uppercase?(codepoint_or_string)
 
@@ -114,6 +199,20 @@ defmodule Unicode do
     end
   end
 
+  @doc """
+  True for the digits [0-9], but much more performant than a `\d` regexp checking the same thing.
+
+  Derived from [http://www.unicode.org/reports/tr18/#digit](http://www.unicode.org/reports/tr18/#digit)
+
+  ### Examples
+
+      iex> Unicode.numeric?("65535")
+      true
+      iex> Unicode.numeric?("42")
+      true
+      iex> Unicode.numeric?("lapis philosophorum")
+      false
+  """
   # The regexp 'digit' group. Matches only the ASCII ?0 t/m ?9 characters.
   def numeric?(codepoint) when codepoint in ?0..?9, do: true
   def numeric?(codepoint) when is_integer(codepoint), do: false
@@ -125,7 +224,24 @@ defmodule Unicode do
     end
   end
 
-  # the regexp 'alnum' group.
+  @doc """
+  True for alphanumeric characters, but much more performant than an `:alnum:` regexp checking the same thing.
+  
+  Returns true if `Unicode.alphabetic?(x) or Unicode.numeric?(x)`.
+  
+  Derived from [http://www.unicode.org/reports/tr18/#alnum](http://www.unicode.org/reports/tr18/#alnum)
+  
+  ### Examples
+
+      iex> Unicode.alphanumeric? "1234"
+      true
+      iex> Unicode.alphanumeric? "KeyserSöze1995"
+      true
+      iex> Unicode.alphanumeric? "3段"
+      true
+      iex> Unicode.alphanumeric? "dragon@example.com"
+      false
+  """
   def alphanumeric?(codepoint) when is_integer(codepoint) do
     numeric?(codepoint) || alphabetic?(codepoint)
   end

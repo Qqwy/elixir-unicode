@@ -5,9 +5,27 @@ defmodule Unicode.Mixfile do
     [app: :unicode,
      version: "0.0.1",
      elixir: "~> 1.2",
+     description: description,
+     package: package,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
+  end
+
+  defp description
+  """
+  The _Unicode_ package provides functionality to check properties of unicode codepoints, graphemes and strings.
+
+  This is often useful when checking or validating the contents of strings in sitiations where using Regular Expressions is not necessary and/or too slow. 
+
+  The Unicode package is based on Version 8.0.0 of the Unicode standard.
+  """
+  end
+
+  defp package
+    name: :unicode,
+   files: ["lib", "unicode_source_files", "mix.exs", "README*", "LICENSE*", "license*"],
+
   end
 
   # Configuration for the OTP application

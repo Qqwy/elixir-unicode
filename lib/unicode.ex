@@ -3,18 +3,18 @@ defmodule Unicode do
 
   @moduledoc """
   Provides functionality to efficiently check properties of Unicode codepoints, graphemes and strings.
-  
+
   The current implementation is based on Unicode version _8.0.0_.
 
   """
 
-  @derived_core_properties %{ 
-    Math: :math, 
-    Alphabetic: :alphabetic, 
-    Lowercase: :lowercase, 
-    Uppercase: :uppercase, 
-    # Cased: :cased, 
-    # Case_Ignorable: :case_ignorable, 
+  @derived_core_properties %{
+    Math: :math,
+    Alphabetic: :alphabetic,
+    Lowercase: :lowercase,
+    Uppercase: :uppercase,
+    # Cased: :cased,
+    # Case_Ignorable: :case_ignorable,
     # Changes_When_Lowercased: :changes_when_lowercased,
     # Changes_When_Titlecased: :changes_when_titlecased,
     # Changes_When_Casefolded: :changes_when_casefolded,
@@ -91,7 +91,7 @@ defmodule Unicode do
   """
   @spec alphabetic?(String.codepoint | String.t) :: boolean
   def alphabetic?(codepoint_or_string)
-  
+
   @doc """
   Checks if a single Unicode codepoint (or all characters in the given binary string) adhere to the Derived Core Property `Lowercase`.
 
@@ -158,11 +158,11 @@ defmodule Unicode do
 
   # Define methods from the DerivedCoreProperties.txt
   File.stream!('unicode_source_files/DerivedCoreProperties.txt')
-  |> Stream.reject(fn raw_line -> 
+  |> Stream.reject(fn raw_line ->
     # skip comments and empty lines.
     String.strip(raw_line) == "" || String.starts_with?(raw_line, "#")
   end)
-  |> Stream.map(fn raw_line -> 
+  |> Stream.map(fn raw_line ->
     [charinfo, property] = CompiletimeHelper.split_derived_core_properties_line(raw_line)
 
     # Only define functions for the properties that are part of @derived_core_properties
@@ -188,8 +188,8 @@ defmodule Unicode do
 
     # Non-matching codepoints return `false`
     def unquote(method_name)(codepoint) when is_integer(codepoint), do: false
-    
-    # String handling: Match first codepoint and rest of codepoints.    
+
+    # String handling: Match first codepoint and rest of codepoints.
     def unquote(method_name)(string) when is_binary(string) do
       case String.next_codepoint(string) do
         nil -> false
@@ -197,6 +197,36 @@ defmodule Unicode do
         {<<codepoint::utf8>>, rest} -> unquote(method_name)(codepoint) && unquote(method_name)(rest)
       end
     end
+
+    def unquote(method_name)(string, []), do: unquote(method_name)(string)
+    def unquote(method_name)(string, block) when is_list(block) do
+      blocks = Enum.map(block, &CompiletimeHelper.normalize_block_name/1)
+      in_block?(string, blocks) && unquote(method_name)(string)
+    end
+    def unquote(method_name)(string, block) when is_binary(block), do: unquote(method_name)(string, [block])
+
+    File.stream!('unicode_source_files/Blocks.txt')
+    |> Stream.reject(fn raw_line ->
+      String.strip(raw_line) == "" || String.starts_with?(raw_line, "#")
+    end)
+    |> Stream.map(fn raw_line ->
+      [charinfo, block_name] = CompiletimeHelper.split_block_line(raw_line)
+      block_name = CompiletimeHelper.normalize_block_name(block_name) # as per comments on Block.txt
+      [low_code, high_code] = String.split(charinfo, "..")
+      low_code = String.to_integer(low_code, 16)
+      high_code = String.to_integer(high_code, 16)
+      defp in_block?(code, block) when block == unquote(block_name) and code in unquote(low_code)..unquote(high_code), do: true
+    end) # defp
+    |> Stream.run
+    defp in_block?(string, block) when is_list(block), do: block |> Enum.any?(&in_block?(string, &1))
+    defp in_block?(string, block) when is_binary(string) do
+      case String.next_codepoint(string) do
+        nil -> false
+        {<<codepoint::utf8>>, ""} ->  in_block?(codepoint, block)
+        {<<codepoint::utf8>>, rest} -> in_block?(codepoint, block) && in_block?(rest, block)
+      end
+    end
+    defp in_block?(_, block), do: raise "Block not found: \"#{block}\". See http://unicode.org/faq/blocks_ranges.html and http://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt"
   end
 
   @doc """
@@ -226,11 +256,11 @@ defmodule Unicode do
 
   @doc """
   True for alphanumeric characters, but much more performant than an `:alnum:` regexp checking the same thing.
-  
+
   Returns true if `Unicode.alphabetic?(x) or Unicode.numeric?(x)`.
-  
+
   Derived from [http://www.unicode.org/reports/tr18/#alnum](http://www.unicode.org/reports/tr18/#alnum)
-  
+
   ### Examples
 
       iex> Unicode.alphanumeric? "1234"
@@ -242,14 +272,15 @@ defmodule Unicode do
       iex> Unicode.alphanumeric? "dragon@example.com"
       false
   """
-  def alphanumeric?(codepoint) when is_integer(codepoint) do
-    numeric?(codepoint) || alphabetic?(codepoint)
+  def alphanumeric?(codepoint, block \\ [])
+  def alphanumeric?(codepoint, block) when is_integer(codepoint) do
+    numeric?(codepoint) || alphabetic?(codepoint, block)
   end
-  def alphanumeric?(string) when is_binary(string) do
+  def alphanumeric?(string, block) when is_binary(string) do
     case String.next_codepoint(string) do
       nil -> false
-      {<<codepoint::utf8>>, ""} ->  alphanumeric?(codepoint)
-      {<<codepoint::utf8>>, rest} -> alphanumeric?(codepoint) && alphanumeric?(rest)
+      {<<codepoint::utf8>>, ""} ->  alphanumeric?(codepoint, block)
+      {<<codepoint::utf8>>, rest} -> alphanumeric?(codepoint, block) && alphanumeric?(rest, block)
     end
   end
 

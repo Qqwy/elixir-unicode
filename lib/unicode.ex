@@ -218,7 +218,7 @@ defmodule Unicode do
       defp in_block?(code, block) when block == unquote(block_name) and code in unquote(low_code)..unquote(high_code), do: true
     end) # defp
     |> Stream.run
-    defp in_block?(string, block) when is_list(block), do: block |> Enum.any?(&in_block?(string, &1))
+    defp in_block?(code, block) when is_integer(code) and is_list(block), do: Enum.any?(block, &in_block?(code, &1))
     defp in_block?(string, block) when is_binary(string) do
       case String.next_codepoint(string) do
         nil -> false
@@ -226,7 +226,7 @@ defmodule Unicode do
         {<<codepoint::utf8>>, rest} -> in_block?(codepoint, block) && in_block?(rest, block)
       end
     end
-    defp in_block?(_, block), do: raise "Block not found: \"#{block}\". See http://unicode.org/faq/blocks_ranges.html and http://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt"
+    defp in_block?(_, _), do: false # what happens when a non-existent block is passed?
   end
 
   @doc """

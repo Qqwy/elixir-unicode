@@ -14,11 +14,7 @@ defmodule Unicode.Mixfile do
 
   defp description do
   """
-  The _Unicode_ package provides functionality to check properties of unicode codepoints, graphemes and strings.
-
-  This is often useful when checking or validating the contents of strings in situations where using Regular Expressions is not necessary and/or too slow. 
-
-  The Unicode package is based on Version 8.0.0 of the Unicode standard.
+  Check properties of unicode codepoints, graphemes and strings.
   """
   end
 

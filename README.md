@@ -34,7 +34,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     def deps do
       [
-        {:unicode, "~> 0.0.1"}
+        {:unicode, "~> 1.0.0"}
       ]
     end
 
@@ -42,3 +42,16 @@ You can now check properties of codepoints, graphemes or strings like follows:
 
     Unicode.alphabetic?(?á)
     Unicode.alphanumeric?("camembert123")
+
+Since version 1.0.0, it is also possible to check if certain characters are alphabetic according to specific unicode blocks:
+
+    Unicode.alphabetic?("html", "Basic Latin")
+    Unicode.alphabetic?("Σ", "Greek and Coptic")
+    Unicode.alphabetic?("Σlixir", ["Greek and Coptic", "Basic Latin"])
+
+
+
+## Changelog
+
+- 1.0.0 Version deemed stable. New addition: Block ranges.
+- 0.0.1 First version

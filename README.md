@@ -53,5 +53,6 @@ Since version 1.0.0, it is also possible to check if certain characters are alph
 
 ## Changelog
 
+- 1.0.1 Updated outdated dependencies. Non-breaking change (although support for Elixir < 1.4 is now dropped).
 - 1.0.0 Version deemed stable. New addition: Block ranges.
 - 0.0.1 First version

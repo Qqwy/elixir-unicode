@@ -1,3 +1,7 @@
+# **NOTE**: This repository is archived and no longer maintained. For the spiritual successor to this library, see [elixir-unicode/unicode](https://github.com/elixir-unicode/unicode).
+
+
+
 # Unicode
 
 [![hex.pm version](https://img.shields.io/hexpm/v/unicode.svg)](https://hex.pm/packages/unicode)
